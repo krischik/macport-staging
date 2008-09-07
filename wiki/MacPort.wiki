@@ -1,5 +1,0 @@
-#summary MacPorts Introduction
-
-= Introduction =
-
-MacProt is a package manager mainly targeted for Mac OS X. You find MacPort's Homepage here: http://www.macports.org .
