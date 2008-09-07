@@ -1,0 +1,5 @@
+#summary MacPorts Introduction
+
+= Introduction =
+
+PacProts is a package manager mainly targeted for Mac OS X. You find MacPorts Homepage here: http://www.macports.org .
