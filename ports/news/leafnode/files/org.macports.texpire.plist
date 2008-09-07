@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GroupName</key>
+	<string>_news</string>
+	<key>KeepAlive</key>
+	<false/>
+	<key>Label</key>
+	<string>org.macports.texpire</string>
+	<key>Program</key>
+	<string>/opt/local/sbin/texpire</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/local/sbin/texpire</string>
+	</array>
+	<key>QueueDirectories</key>
+	<array/>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>20</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+	<key>UserName</key>
+	<string>_news</string>
+	<key>WatchPaths</key>
+	<array/>
+	<key>WorkingDirectory</key>
+	<string>/opt/local/var/run/texpire</string>
+</dict>
+</plist>

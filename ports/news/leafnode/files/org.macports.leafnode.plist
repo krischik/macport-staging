@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GroupName</key>
+	<string>_news</string>
+	<key>UserName</key>
+	<string>_news</string>
+        <key>OnDemand</key>
+	<true/>
+	<key>Label</key>
+	<string>org.macports.leafnode</string>
+	<key>Program</key>
+	<string>/opt/local/sbin/leafnode</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/local/sbin/leafnode</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<dict>
+			<key>SockServiceName</key>
+			<string>nntp</string>
+		</dict>
+	</dict>
+	<key>WorkingDirectory</key>
+	<string>/opt/local/var/spool/news</string>
+	<key>inetdCompatibility</key>
+	<dict>
+		<key>Wait</key>
+		<false/>
+	</dict>
+</dict>
+</plist>
