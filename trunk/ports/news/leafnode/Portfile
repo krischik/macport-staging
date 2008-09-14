@@ -1,5 +1,4 @@
 # $Id$
-
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4
 
 PortSystem 1.0
@@ -37,6 +36,7 @@ configure.cxxflags-append   "-I${prefix}/include"
 
 destroot.destdir	    prefix=${destroot}${prefix}
 
+
 pre-destroot {
     addgroup	_news		realname="NEWS Server group"
     adduser	_news gid=_news realname="NEWS Server user"
@@ -58,5 +58,5 @@ post-destroot {
 	${destroot}${prefix}/etc/${name}
 }
 
-# vim: set nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
+# vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=tcl foldmethod=marker nospell :
