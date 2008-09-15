@@ -3,59 +3,75 @@
 
 PortSystem 1.0
 
-name			    leafnode
-version			    1.11.6
-categories		    news
-platforms		    darwin
-maintainers		    krischik@me.com
-description		    nget is a store & forward NNTP proxy
-long_description	    Leafnode is a software package that implements a store	\
-			    & forward NNTP proxy (client and server) that supportis	\
-			    TCP connections across IPv4 and IPv6. It can be used to	\
-			    give a regular newsreader off-line functionality, merge	\
-			    news articles from several upstream newsservers for		\
-			    newsreaders that only support one server well and avoid	\
-			    duplicate news download for a small LAN with multiple	\
-			    users reading news.
+name				leafnode
+version				1.11.6
+categories			news
+platforms			darwin
+maintainers			krischik@me.com
+description			nget is a store & forward NNTP proxy
+long_description	Leafnode is a software package that implements a store	\
+					& forward NNTP proxy (client and server) that supportis	\
+					TCP connections across IPv4 and IPv6. It can be used to	\
+					give a regular newsreader off-line functionality, merge	\
+					news articles from several upstream newsservers for		\
+					newsreaders that only support one server well and avoid	\
+					duplicate news download for a small LAN with multiple	\
+					users reading news.
 
-homepage		    http://leafnode.sourceforge.net/
-master_sites		    sourceforge
+homepage			http://leafnode.sourceforge.net/
+master_sites		sourceforge
 
-checksums		    md5 5a083968dbacc3d6f6d1013241c23e39
+checksums			md5 5a083968dbacc3d6f6d1013241c23e39
 
-depends_lib
+depends_lib			port:zsh-devel
 
-use_bzip2		    yes
+use_bzip2			yes
 
-configure.args		    --mandir='\${prefix}/share/man'	    \
-			    --sysconfdir='\${prefix}/etc/${name}'    \
-			    --with-user=_news			    \
-			    --with-group=_news
+configure.args		--mandir='\${prefix}/share/man'			\
+					--sysconfdir='\${prefix}/etc/${name}'	\
+					--with-user=_news						\
+					--with-group=_news
 
-configure.cxxflags-append   "-I${prefix}/include"
+configure.cxxflags-append	"-I${prefix}/include"
 
-destroot.destdir	    prefix=${destroot}${prefix}
+destroot.destdir	prefix=${destroot}${prefix}
 
 
 pre-destroot {
-    addgroup	_news		realname="NEWS Server group"
-    adduser	_news gid=_news realname="NEWS Server user"
+	addgroup	_news			realname="NEWS Server group"
+	adduser		_news gid=_news realname="NEWS Server user"
 }
 
 post-destroot {
-    xinstall -o _news -g _news -m 750 -d ${destroot}${prefix}/etc/${name}
-    xinstall -o _news -g root  -m 750 -d ${destroot}${prefix}/etc/LaunchDaemons/org.macports.${name}
-    xinstall -o _news -g _news -m 750 -d ${destroot}${prefix}/var/spool/news
+	xinstall -o _news -g _news -m 750 -d ${destroot}${prefix}/etc/${name}
+	xinstall -o root  -g wheel -m 750 -d ${destroot}${prefix}/etc/LaunchDaemons/org.macports.${name}
+	xinstall -o root  -g admin -m 755 -d ${destroot}${prefix}/var
+	xinstall -o root  -g admin -m 755 -d ${destroot}${prefix}/var/spool
+	xinstall -o _news -g _news -m 755 -d ${destroot}${prefix}/var/spool/news
+	xinstall -o root  -g admin -m 750 -d ${destroot}/Applications/MacPorts/Utilities
 
-    xinstall -o _news -g _news  -m 640	\
-	-W ${filespath}			\
-	config filters			\
-	${destroot}${prefix}/etc/${name}
+	xinstall -o _news -g _news -m 640									\
+		-W ${filespath}													\
+		config															\
+		filters															\
+		${destroot}${prefix}/etc/${name}
 
-    xinstall -o _news -g _news  -m 640	\
-	-W ${filespath}			\
-	config filters			\
-	${destroot}${prefix}/etc/${name}
+	xinstall -o _news -g _news -m 644									\
+		-W ${filespath}													\
+		dummy															\
+		${destroot}${prefix}/var/spool/news
+
+	xinstall -o root -g wheel -m 644									\
+		-W ${filespath}													\
+		org.macports.leafnode.plist										\
+		org.macports.texpire.plist										\
+		${destroot}${prefix}/etc/LaunchDaemons/org.macports.${name}
+
+	xinstall -o root -g Admin -m 755									\
+		-W ${filespath}													\
+		Restart_Leafnode.command										\
+		Restart_Texpire.command											\
+		${destroot}/Applications/MacPorts/Utilities
 }
 
 # vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
