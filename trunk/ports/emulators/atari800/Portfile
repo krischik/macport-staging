@@ -5,7 +5,7 @@ PortSystem 1.0
 
 name				atari800
 version				2.0.3
-revision			1
+revision			3
 platforms			darwin
 categories			emulators
 maintainers			krischik@me.com
@@ -15,14 +15,22 @@ long_description	atari800 is an emulator of the classic Atari 800 8bit computer.
 homepage			http://atari800.sourceforge.net/
 master_sites		sourceforge
 
-checksums			atari800-2.0.3.tar.gz sha1 e6cfcd22b79874239bd664a476ff287c2d708924
+set prog			atari800-${version}.tar.gz
+set rom				xf25.zip
+
+distfiles			${prog}	\
+					${rom}
+
+extract.only		${prog}
+
+checksums			${prog} sha1 e6cfcd22b79874239bd664a476ff287c2d708924	\
+					${rom}  sha1 e65923fd3a4845c1c72d1677db0fda969187eb42
 
 depends_lib			port:libsdl port:libpng port:libsdl_image port:libsdl_sound
 
-use_bzip2			no
-
 configure.args		--target="sdl"							\
 					--mandir='\${prefix}/share/man'			\
+					--datadir='\${prefix}/share/atari800'	\
 					--sysconfdir='\${prefix}/etc/${name}'
 
 configure.cxxflags-append   "-I${prefix}/include"
@@ -31,7 +39,30 @@ configure.env-append    CFLAGS="-O2 -I/opt/local/include -I/opt/local/include/SD
 
 worksrcdir			${name}-${version}/src
 
-destroot.destdir	prefix=${destroot}${prefix}
+post-extract {
+    system "unzip -q ${distpath}/${rom} -d ${workpath}/xf25"
+}
 
-# vim: set nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
+post-destroot {
+	xinstall -o root -g admin -m 775 -d ${destroot}${prefix}/share/atari800
+	xinstall -o root -g admin -m 775 -d ${destroot}/Applications/MacPorts
+
+	xinstall -o root -g admin -m 444							\
+		-W ${workpath}/xf25										\
+		ATARIBAS.ROM											\
+		ATARIOSB.ROM											\
+		ATARIXL.ROM												\
+		DEMOS1.XFD												\
+		DEMOS2.XFD												\
+		DOS25.XFD												\
+		MYDOS45D.ATR											\
+		${destroot}${prefix}/share/atari800
+
+	xinstall -o root -g Admin -m 755							\
+		-W ${filespath}											\
+		Atari320XE.command										\
+		${destroot}/Applications/MacPorts/Atari320XE.command
+}
+
+# vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=tcl foldmethod=marker nospell :
