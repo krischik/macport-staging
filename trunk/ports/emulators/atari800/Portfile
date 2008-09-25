@@ -76,5 +76,6 @@ post-destroot {
 		${destroot}${applications_dir}/Atari320XE.command
 }
 
+############################################################ {{{1 ###########
 # vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=tcl foldmethod=marker nospell :
