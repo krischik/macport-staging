@@ -1,16 +1,5 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; truncate-lines: t; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:et:sw=4:ts=4:sts=4
 # $Id$
-############################################################## {{{1 ##########
-#
-#	$Author: krischik@users.sourceforge.net $
-#
-#	$Revision: 17 $
-#	$Date: 2008-09-25 19:14:42 +0200 (Do, 25 Sep 2008) $
-#
-#	$Id: Fix_Subversion.command 17 2008-09-25 17:14:42Z krischik@users.sourceforge.net $
-#	$HeadURL: https://macport-staging.googlecode.com/svn/trunk/Utilities/Fix_Subversion.command $
-#
-############################################################## }}}1 ##########
 
 PortSystem 1.0
 

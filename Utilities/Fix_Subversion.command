@@ -1,14 +1,9 @@
 #!/bin/zsh
 ############################################################## {{{1 ##########
-#
-#	$Author$
-#
-#	$Revision$
-#	$Date$
-#
-#	$Id$
-#	$HeadURL$
-#
+#   $Author$
+#   $Revision$
+#   $Date$
+#   $HeadURL$
 ############################################################## }}}1 ##########
 
 setopt Extended_Glob;
@@ -129,6 +124,20 @@ pushd $(dirname ${0})/..
 	    svn propset     svn:keywords    "Author Date Id Revision HeadURL"	"${I}" ;
 	fi;
 	Set_EA "mime_type" "text/x-shellscript" "${I}";
+    done; unset I
+
+    for I in		\
+	**/*.tcp	\
+	**/Portfile	;
+    do
+	chmod +x "${I}";
+	if test -f "${I:h}/.svn/text-base/${I:t}.svn-base"; then
+	    svn propset     svn:mime-type   "text/x-shellscript"		"${I}" ;
+	    svn propset     svn:eol-style   "LF"				"${I}" ;
+	    svn propset     svn:executable  "*"					"${I}" ;
+	    svn propset     svn:keywords    "Author Date Id Revision HeadURL"	"${I}" ;
+	fi;
+	Set_EA "mime_type" "text/x-tcl" "${I}";
     done; unset I
 
     for I in		\
