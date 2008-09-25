@@ -5,7 +5,7 @@ PortSystem 1.0
 
 name				atari800
 version				2.0.3
-revision			3
+revision			4
 platforms			darwin
 categories			emulators
 maintainers			krischik@me.com
@@ -26,7 +26,16 @@ extract.only		${prog}
 checksums			${prog} sha1 e6cfcd22b79874239bd664a476ff287c2d708924	\
 					${rom}  sha1 e65923fd3a4845c1c72d1677db0fda969187eb42
 
-depends_lib			port:libsdl port:libpng port:libsdl_image port:libsdl_sound
+depends_lib			port:libsdl						\
+					port:libpng						\
+					port:libsdl_image				\
+					port:libsdl_sound				\
+					path:${prefix}/bin/zsh:zsh
+
+# Can be removed once MacPorts 1.7.0 is released
+if {![info exists applications_dir]} {
+    set applications_dir /Applications/MacPorts
+}
 
 configure.args		--target="sdl"							\
 					--mandir='\${prefix}/share/man'			\
@@ -35,7 +44,7 @@ configure.args		--target="sdl"							\
 
 configure.cxxflags-append   "-I${prefix}/include"
 
-configure.env-append    CFLAGS="-O2 -I/opt/local/include -I/opt/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE"
+configure.env-append    CFLAGS="-O2 -I${prefix}/include -I${prefix}/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE"
 
 worksrcdir			${name}-${version}/src
 
@@ -44,10 +53,10 @@ post-extract {
 }
 
 post-destroot {
-	xinstall -o root -g admin -m 775 -d ${destroot}${prefix}/share/atari800
-	xinstall -o root -g admin -m 775 -d ${destroot}/Applications/MacPorts
+	xinstall -m 775 -d ${destroot}${prefix}/share/atari800
+	xinstall -m 775 -d ${destroot}${applications_dir}
 
-	xinstall -o root -g admin -m 444							\
+	xinstall -m 444												\
 		-W ${workpath}/xf25										\
 		ATARIBAS.ROM											\
 		ATARIOSB.ROM											\
@@ -58,10 +67,13 @@ post-destroot {
 		MYDOS45D.ATR											\
 		${destroot}${prefix}/share/atari800
 
-	xinstall -o root -g Admin -m 755							\
+	xinstall -m 755												\
 		-W ${filespath}											\
-		Atari320XE.command										\
-		${destroot}/Applications/MacPorts/Atari320XE.command
+		Atari320XE.command.in									\
+		${destroot}${applications_dir}/Atari320XE.command
+	reinplace													\
+		s|@PREFIX@|${prefix}|g									\
+		${destroot}${applications_dir}/Atari320XE.command
 }
 
 # vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :

@@ -107,6 +107,7 @@ pushd $(dirname ${0})/..
 	**/*.sh		\
 	**/*.zsh	\
 	**/*.command    \
+	**/*.command.in \
 	*/*.bash	;
     do
 	chmod +x "${I}";
@@ -320,7 +321,8 @@ pushd $(dirname ${0})/..
 
     for I in		\
 	**/*.xml	\
-	**/*.plist	;
+	**/*.plist	\
+	**/*.plist.in	;
     do
 	chmod -x "${I}";
 	if test -f "${I:h}/.svn/text-base/${I:t}.svn-base"; then

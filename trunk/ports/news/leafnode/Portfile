@@ -5,7 +5,7 @@ PortSystem 1.0
 
 name				leafnode
 version				1.11.6
-revision			3
+revision			4
 categories			news
 platforms			darwin
 maintainers			krischik@me.com
@@ -50,12 +50,12 @@ pre-destroot {
 }
 
 post-destroot {
-	xinstall -o _news -g _news -m 750 -d ${destroot}${prefix}/etc/${name}
-	xinstall -o root  -g wheel -m 750 -d ${destroot}${prefix}${launch_dir}
-	xinstall -o root  -g admin -m 755 -d ${destroot}${prefix}/var
-	xinstall -o root  -g admin -m 755 -d ${destroot}${prefix}/var/spool
-	xinstall -o _news -g _news -m 755 -d ${destroot}${prefix}/var/spool/news
-	xinstall -o root  -g admin -m 750 -d ${destroot}/${applications_dir}
+	xinstall -o _news -g _news	-m 750 -d ${destroot}${prefix}/etc/${name}
+	xinstall -o root  -g wheel	-m 750 -d ${destroot}${prefix}${launch_dir}
+	xinstall					-m 755 -d ${destroot}${prefix}/var
+	xinstall					-m 755 -d ${destroot}${prefix}/var/spool
+	xinstall -o _news -g _news	-m 755 -d ${destroot}${prefix}/var/spool/news
+	xinstall					-m 750 -d ${destroot}/${applications_dir}/Utilities
 
 	xinstall -o _news -g _news -m 640											\
 		-W ${filespath}															\
@@ -81,18 +81,18 @@ post-destroot {
 		org.macports.texpire.plist.in											\
 		${destroot}${prefix}${launch_dir}/org.macports.texpire.plist
 
-	xinstall -o root -g Admin -m 755											\
+	xinstall -m 755																\
 		-W ${filespath}															\
 		Restart_Fetchnews.command.in											\
-		${destroot}/${applications_dir}/Restart_Fetchnews.command
-	xinstall -o root -g Admin -m 755											\
+		${destroot}/${applications_dir}/Utilities/Restart_Fetchnews.command
+	xinstall -m 755																\
 		-W ${filespath}															\
 		Restart_Leafnode.command.in												\
-		${destroot}/${applications_dir}/Restart_Leafnode.command
-	xinstall -o root -g Admin -m 755											\
+		${destroot}/${applications_dir}/Utilities/Restart_Leafnode.command
+	xinstall -m 755																\
 		-W ${filespath}															\
-		Restart_Fetchnews.command.in											\
-		${destroot}/${applications_dir}/Restart_Fetchnews.command
+		Restart_Texpire.command.in												\
+		${destroot}/${applications_dir}/Utilities/Restart_Texpire.command
 
 	reinplace																	\
 		s|@PREFIX@|${prefix}|g													\
@@ -101,9 +101,9 @@ post-destroot {
 		${destroot}${prefix}${launch_dir}/org.macports.texpire.plist
 	reinplace																	\
 		s|@PREFIX@|${prefix}|g													\
-		${destroot}/${applications_dir}/Restart_Fetchnews.command				\
-		${destroot}/${applications_dir}/Restart_Leafnode.command				\
-		${destroot}/${applications_dir}/Restart_Fetchnews.command
+		${destroot}/${applications_dir}/Utilities/Restart_Fetchnews.command		\
+		${destroot}/${applications_dir}/Utilities/Restart_Leafnode.command		\
+		${destroot}/${applications_dir}/Utilities/Restart_Texpire.command
 }
 
 # vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
