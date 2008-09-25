@@ -1,11 +1,11 @@
-#!/opt/local/bin/zsh
+#!@PREFIX@/bin/zsh
 
 setopt X_Trace;
 
 if test "${USER}" = "root"; then
     if test ! -L /Library/LaunchDaemons/org.macports.fetchnews.plist; then
 	ln -s											\
-	    /opt/local/etc/LaunchDaemons/org.macports.leafnode/org.macports.fetchnews.plist	\
+	    @PREFIX@/etc/LaunchDaemons/org.macports.leafnode/org.macports.fetchnews.plist	\
 	    /Library/LaunchDaemons/org.macports.fetchnews.plist					;
     fi;
 
