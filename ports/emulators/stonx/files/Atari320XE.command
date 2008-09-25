@@ -1,4 +1,15 @@
 #!/opt/local/bin/zsh
+############################################################## {{{1 ##########
+#
+#	$Author$
+#
+#	$Revision$
+#	$Date$
+#
+#	$Id$
+#	$HeadURL$
+#
+############################################################## }}}1 ##########
 
 local User_Data="${HOME}/Library/Application Support/Atari800"
 local System_Data="/opt/local/share/atari800";
