@@ -4,14 +4,14 @@
 	<dict>
 		<key>OnDemand</key>			<true/>
 		<key>Label</key>			<string>org.macports.leafnode</string>
-		<key>WorkingDirectory</key>	<string>/opt/local/var/spool/news</string>
+		<key>WorkingDirectory</key>	<string>@PREFIX@/var/spool/news</string>
 		<key>Program</key>			<string>/usr/bin/sudo</string>
 		<key>ProgramArguments</key>
 		<array>
 			<string>/usr/bin/sudo</string>
 			<string>-u</string>
 			<string>_news</string>
-			<string>/opt/local/sbin/leafnode</string>
+			<string>@PREFIX@/sbin/leafnode</string>
 		</array>
 		<key>Sockets</key>
 		<dict>
