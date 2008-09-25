@@ -1,7 +1,7 @@
-#!/opt/local/bin/zsh
+#!@PREFIX@/bin/zsh
 
 local User_Data="${HOME}/Library/Application Support/Atari800"
-local System_Data="/opt/local/share/atari800";
+local System_Data="@PREFIX@/share/atari800";
 
 if test ! -d "${User_Data}"; then
     mkdir "${User_Data}";
@@ -9,11 +9,11 @@ fi;
 
 if test ! -w  "${User_Data}/MYDOS45D.ATR"; then
     cp						\
-	/opt/local/share/atari800/MYDOS45D.ATR	\
+	@PREFIX@/share/atari800/MYDOS45D.ATR	\
 	"${User_Data}/MYDOS45D.ATR"		;
 fi;
 
-/opt/local/bin/atari800				\
+@PREFIX@/bin/atari800				\
     -320xe					\
     -basic					\
     -pal					\
