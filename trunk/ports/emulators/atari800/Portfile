@@ -32,11 +32,6 @@ depends_lib			port:libsdl						\
 					port:libsdl_sound				\
 					path:${prefix}/bin/zsh:zsh
 
-# Can be removed once MacPorts 1.7.0 is released
-if {![info exists applications_dir]} {
-    set applications_dir /Applications/MacPorts
-}
-
 configure.args		--target="sdl"							\
 					--mandir='\${prefix}/share/man'			\
 					--datadir='\${prefix}/share/atari800'	\
@@ -47,6 +42,7 @@ configure.cxxflags-append   "-I${prefix}/include"
 configure.env-append    CFLAGS="-O2 -I${prefix}/include -I${prefix}/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE"
 
 worksrcdir			${name}-${version}/src
+use_parallel_build	yes
 
 post-extract {
     system "unzip -q ${distpath}/${rom} -d ${workpath}/xf25"
