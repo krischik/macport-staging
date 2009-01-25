@@ -20,7 +20,7 @@ homepage			http://free42.sourceforge.net/
 master_sites		sourceforge
 
 set prog			free42.${version}.tgz
-set skin			Free42Skins.zip 
+set skin			Free42Skins.zip
 
 distfiles			${prog}	\
 					${skin}
@@ -44,18 +44,53 @@ post-extract {
 }
 
 build {
-	reinplace "s|CXXFLAGS := |CXXFLAGS := -DNO_SINCOS |g" ${workpath}/free42/gtk/Makefile 
+	reinplace "s|CXXFLAGS := |CXXFLAGS := -DNO_SINCOS |g" ${workpath}/free42/gtk/Makefile
 	system "
 	cd ${workpath}/free42/gtk;
 	unset BCD_MATH
-	make 
+	make
 	make clean
 	make -e BCD_MATH=1"
 }
 
 destroot {
-	xinstall -m 775 -d ${destroot}${prefix}/share/atari800
+	xinstall -m 775 -d ${destroot}${prefix}/share/free42
 	xinstall -m 775 -d ${destroot}${applications_dir}
+
+	xinstall -m 444											\
+		-W ${workpath}/skin									\
+		42ck.gif											\
+		42ck.layout											\
+		42ct.gif											\
+		42ct.layout											\
+		Ehrling42sl.gif										\
+		Ehrling42sl.layout									\
+		Ehrling42sm.gif										\
+		Ehrling42sm.layout									\
+		HP42S.gif											\
+		HP42S.layout										\
+		KR.gif												\
+		KR.layout											\
+		Khor.gif											\
+		Khor.layout											\
+		"Michaels HP.gif"									\
+		"Michaels HP.layout"								\
+		Original.gif										\
+		Original.layout										\
+		README.txt											\
+		SemiAuto42.gif										\
+		SemiAuto42.layout									\
+		SemiAuto42b.gif										\
+		SemiAuto42b.layout									\
+		SemiReal42.gif										\
+		SemiReal42.layout									\
+		Standard.gif										\
+		Standard.layout										\
+		Voyager42.gif										\
+		Voyager42.layout									\
+		Widgi42.gif											\
+		Widgi42.layout										\
+		${destroot}${prefix}/share/free42
 
 	xinstall -m 775											\
 		-W ${workpath}/free42/gtk							\
@@ -63,13 +98,22 @@ destroot {
 		free42dec											\
 		${destroot}${prefix}/bin
 
-	xinstall -m 755												\
-		-W ${filespath}											\
-		Atari320XE.command.in									\
-		${destroot}${applications_dir}/Atari320XE.command
-	reinplace													\
-		s|@PREFIX@|${prefix}|g									\
-		${destroot}${applications_dir}/Atari320XE.command
+	xinstall -m 755															\
+		-W ${filespath}														\
+		Free42-Decimal.command.in											\
+		${destroot}${applications_dir}/Free42-Decimal.command
+	reinplace																\
+		s|@PREFIX@|${prefix}|g												\
+		${destroot}${applications_dir}/Free42-Decimal.command
+	system "SetFile -a E ${destroot}${applications_dir}/Free42-Decimal.command"
+	xinstall -m 755															\
+		-W ${filespath}														\
+		Free42-Binary.command.in											\
+		${destroot}${applications_dir}/Free42-Binary.command
+	reinplace																\
+		s|@PREFIX@|${prefix}|g												\
+		${destroot}${applications_dir}/Free42-Binary.command
+	system "SetFile -a E ${destroot}${applications_dir}/Free42-Binary.command"
 }
 
 ############################################################ {{{1 ###########
