@@ -1,0 +1,21 @@
+#!/opt/local/bin/zsh
+############################################################## {{{1 ##########
+#   $Author: krischik@users.sourceforge.net $
+#   $Revision: 23 $
+#   $Date: 2009-01-25 21:43:59 +0100 (So, 25 Jan 2009) $
+#   $HeadURL: https://macport-staging.googlecode.com/svn/trunk/ports/emulators/free42/files/Atari320XE.command.in $
+############################################################## }}}1 ##########
+
+local User_Data="${HOME}/.free42"
+local System_Data="/opt/local/share/free42";
+
+if test ! -d "${User_Data}"; then
+    mkdir "${User_Data}";
+    ln -s "/opt/local/share/free/"*  "${User_Data}/"
+fi;
+
+/opt/local/bin/free42dec &
+
+############################################################ {{{1 ###########
+# vim: set nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
+# vim: set textwidth=0 filetype=zsh foldmethod=marker nospell :
