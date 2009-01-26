@@ -6,17 +6,15 @@
 #   $HeadURL$
 ############################################################## }}}1 ##########
 
-setopt X_Trace
-
 local User_Data="${HOME}/.free42"
-local System_Data="@PREFIX@/share/free";
+local System_Data="@PREFIX@/share/free42";
 
 if test ! -d "${User_Data}"; then
     mkdir "${User_Data}";
-    ln -s "@PREFIX@/share/free/"*  "${User_Data}/"
+    ln -s "${System_Data}"/*  "${User_Data}/";
 fi;
 
-@PREFIX@/bin/free42dec;
+@PREFIX@/bin/free42dec &
 
 ############################################################ {{{1 ###########
 # vim: set nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
