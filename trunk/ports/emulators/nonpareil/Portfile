@@ -37,17 +37,9 @@ depends_lib			port:bison								\
 					port:netpbm								\
 					port:pkgconfig							\
 					port:python23							\
-					port:scons								\
-					path:${prefix}/bin/zsh:zsh
+					port:scons								
 
-#configure.args		--target="sdl"							\
-					#--mandir='\${prefix}/share/man'			\
-					#--datadir='\${prefix}/share/atari800'	\
-					#--sysconfdir='\${prefix}/etc/${name}'
-
-#configure.cxxflags-append   "-I${prefix}/include"
-
-#configure.env-append    CFLAGS="-O2 -I${prefix}/include -I${prefix}/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE"
+patchfiles          patch-src-util.diff
 
 worksrcdir			${name}-${version}
 use_parallel_build	yes
@@ -56,33 +48,14 @@ build.cmd			"scons-local/scons.py"
 build.args			--jobs=4 prefix=${prefix}
 build.target
 
+destroot.cmd		"scons-local/scons.py"
+build.args			--jobs=4 prefix=${prefix} destdir=${destroot}
+
 post-extract {
 	system "cd ${workpath}/${name}-${version}/scons-local; tar -xzf scons-local-0.96.90.tar.gz"
 }
 
-#post-destroot {
-	#xinstall -m 775 -d ${destroot}${prefix}/share/atari800
-	#xinstall -m 775 -d ${destroot}${applications_dir}
 
-	#xinstall -m 444												\
-		#-W ${workpath}/xf25										\
-		#ATARIBAS.ROM											\
-		#ATARIOSB.ROM											\
-		#ATARIXL.ROM												\
-		#DEMOS1.XFD												\
-		#DEMOS2.XFD												\
-		#DOS25.XFD												\
-		#MYDOS45D.ATR											\
-		#${destroot}${prefix}/share/atari800
-
-	#xinstall -m 755												\
-		#-W ${filespath}											\
-		#Atari320XE.command.in									\
-		#${destroot}${applications_dir}/Atari320XE.command
-	#reinplace													\
-		#s|@PREFIX@|${prefix}|g									\
-		#${destroot}${applications_dir}/Atari320XE.command
-#}
 
 ############################################################ {{{1 ###########
 # vim: set nowrap tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab :
