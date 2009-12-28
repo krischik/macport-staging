@@ -1,0 +1,20 @@
+--- setup/build_environment.py.orig	2009-12-27 10:57:29.000000000 +0100
++++ setup/build_environment.py	2009-12-27 10:59:04.000000000 +0100
+@@ -13,12 +13,15 @@
+ 
+ from setup import isosx, iswindows, islinux
+ 
+-OSX_SDK = '/Developer/SDKs/MacOSX10.5.sdk'
++OSX_SDK = '/Developer/SDKs/MacOSX10.6.sdk'
++if not os.path.exists(OSX_SDK):
++    OSX_SDK = '/Developer/SDKs/MacOSX10.5.sdk'
+ if not os.path.exists(OSX_SDK):
+     OSX_SDK = '/Developer/SDKs/MacOSX10.4u.sdk'
++snow_leopard_build = '10.6' in OSX_SDK
+ leopard_build = '10.5' in OSX_SDK
+ 
+-os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.5' if leopard_build else '10.4'
++os.environ['MACOSX_DEPLOYMENT_TARGET'] = '10.5' if leopard_build or snow_leopard_build else '10.4'
+ 
+ NMAKE = RC = msvc = MT = win_inc = win_lib = None
+ if iswindows:
