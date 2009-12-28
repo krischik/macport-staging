@@ -1,0 +1,96 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; truncate-lines: t; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+# $Id: Portfile 61961 2009-12-26 08:33:40Z krischik@macports.org $
+# vim: set fileencoding=utf-8 tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab filetype=tcl :
+
+PortSystem	    1.0
+
+name		    calibre
+version		    0.6.29
+revision	    0
+platforms	    darwin
+categories	    ebook
+maintainers	    macports.org:krischik
+description	    calibre is a free and open source e-book library management
+long_description								    \
+    calibre is an e-book library manager. It can view, convert and catalog e-books  \                                                   
+    in most of the major e-book formats. It can also talk to e-book reader	    \
+    devices. It can go out to the internet and fetch metadata for your books.	    \
+    It can download newspapers and convert them into e-books for convenient	    \
+    reading. It is cross platform, running on Linux, Windows and OS X.
+
+homepage	    http://calibre-ebook.com/
+master_sites	    sourceforge
+distfiles	    calibre-${version}.tar.gz
+worksrcdir	    build 
+use_parallel_build  no
+use_configure	    no
+universal_variant   no
+
+checksums           md5     fdc7e3f9d1b78851816706d099ce24f8 \
+                    sha1    b3945d7d35bf9c4251b3b32001746df56ec75fd4 \
+                    rmd160  145c59f44f9deb22bb8f056eb146826e210e28e0
+
+patchfiles				    \
+    setup-build_environment.py.diff	    \
+    setup-extensions.py.diff
+
+#+qt4+quartz
+depends_lib		    \
+    port:fontconfig	    \
+    port:ImageMagick	    \
+    port:podofo		    \
+    port:poppler	    \
+    port:py26-dateutil	    \
+    port:py26-pil	    \
+    port:py26-lxml	    \
+    port:py26-mechanize	    \
+    port:py26-pyflakes	    \
+    port:py26-processing    \
+    port:py26-pyqt4	    \
+    port:qt4-mac-devel
+
+depends_build		    \
+    port:py26-pyflakes	    \
+    port:unrar
+
+build.env							    \
+    FC_INC_DIR=/opt/local/include/fontconfig			    \
+    FC_LIB_DIR=/opt/local/lib					    \
+    MAGICK_INC=/opt/local/include/ImageMagick:/opt/local/include    \
+    MAGICK_LIB=/opt/local/lib					    \
+    PATH="${prefix}/libexec/qt4-mac/bin:$env(PATH)"		    \
+    PKG_CONFIG_PATH=/opt/local/lib/pkgconfig			    \ 
+    PKGCONFIG=/opt/local/bin/pkg-config				    \
+    PODOFO_INC_DIR=/opt/local/include/podofo			    \
+    PODOFO_LIB_DIR=/opt/local/lib				    \
+    POPPLER_INC_DIR=/opt/local/include/poppler:/opt/local/include   \
+    POPPLER_LIB_DIR=/opt/local					    \
+    QMAKE=/opt/local/libexec/qt4-mac/bin/qmake 
+build.cmd	    "python2.6"
+build.args	    "--prefix"
+build.target	    "install"
+
+pre-configure {
+    file mkdir ${worksrcpath}
+}
+
+build {
+    shell "
+	cp /opt/local/lib/libunrar.dylib /usr/local/lib/
+
+	python2.6 build
+	python2.6 gui
+	python2.6 resources
+	python2.6 translations
+	python2.6 osx32_freeze
+    "
+}
+
+destroot {
+    xinstall -d ${destroot}${applications_dir}
+
+    copy					\
+	${worksrcpath}/bin/Sigil.app		\
+	${destroot}${applications_dir}
+}
+
