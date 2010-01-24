@@ -1,0 +1,60 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; truncate-lines: t; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+# $Id$
+# vim: set fileencoding=utf-8 tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab filetype=tcl :
+
+PortSystem	    1.0
+
+name		    fbreader
+version		    0.12.1
+revision	    0
+platforms	    darwin
+categories	    ebook
+maintainers	    macports.org:krischik
+description	    FBReader is an e-book reader for various platforms. 
+long_description    FBReader is an e-book reader for various platforms. 
+
+homepage	    http://www.fbreader.org/
+master_sites	    http://www.fbreader.org/
+distfiles	    fbreader-sources-${version}.tgz
+worksrcdir	    fbreader-${version} 
+default_variants    +qt
+use_parallel_build  no
+use_configure	    no
+universal_variant   no
+checksums           md5     7236d094a91f26d19a3cfd3db8fcf946 \
+                    sha1    a0bdcf8c7caaa5f86e692dadfa0d9ebe97693b30 \
+                    rmd160  901ac8607c1859fe308fe86499a95ab90bf20573
+
+
+depends_lib		    \
+    port:bzip2		    \
+    port:curl		    \
+    port:expat		    \
+    port:fribidi	    \
+    port:giflib		    \
+    port:jpeg		    \
+    port:liblinebreak  	    \
+    port:libiconv	    \
+    port:libpng		    \
+    port:libzip		    \
+    port:tiff
+
+build.env			    \
+    TARGET_ARCH=macosx		    \
+    TARGET_STATUS=release
+
+variant qt description {Use QT as GUI} {
+    depends_lib-append		    \
+	port:qt4-mac
+    build.env-append		    \
+	UI_TYPE=qt4
+    }
+
+variant gtk description {Use Gtk as GUI } {
+    depends_lib-append		    \
+	port:gtk2
+    build.env-append		    \
+	UI_TYPE=gtk
+    }
+
+#for I in **/*.orig; do diff -u ${I} ${I:r} >/Volumes/Work/macports-staging/ports/ebooks/fbreader/files/${I:h:h}-${I:h:t}-${I:t:r}.diff ; done
