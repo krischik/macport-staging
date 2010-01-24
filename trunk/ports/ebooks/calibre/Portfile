@@ -12,7 +12,7 @@ categories	    ebook
 maintainers	    macports.org:krischik
 description	    calibre is a free and open source e-book library management
 long_description								    \
-    calibre is an e-book library manager. It can view, convert and catalog e-books  \                                                   
+    calibre is an e-book library manager. It can view, convert and catalog e-books  \
     in most of the major e-book formats. It can also talk to e-book reader	    \
     devices. It can go out to the internet and fetch metadata for your books.	    \
     It can download newspapers and convert them into e-books for convenient	    \
@@ -21,7 +21,7 @@ long_description								    \
 homepage	    http://calibre-ebook.com/
 master_sites	    sourceforge
 distfiles	    calibre-${version}.tar.gz
-worksrcdir	    build 
+worksrcdir	    build
 use_parallel_build  no
 use_configure	    no
 universal_variant   no
@@ -59,13 +59,13 @@ build.env							    \
     MAGICK_INC=/opt/local/include/ImageMagick:/opt/local/include    \
     MAGICK_LIB=/opt/local/lib					    \
     PATH="${prefix}/libexec/qt4-mac/bin:$env(PATH)"		    \
-    PKG_CONFIG_PATH=/opt/local/lib/pkgconfig			    \ 
+    PKG_CONFIG_PATH=/opt/local/lib/pkgconfig			    \
     PKGCONFIG=/opt/local/bin/pkg-config				    \
     PODOFO_INC_DIR=/opt/local/include/podofo			    \
     PODOFO_LIB_DIR=/opt/local/lib				    \
     POPPLER_INC_DIR=/opt/local/include/poppler:/opt/local/include   \
     POPPLER_LIB_DIR=/opt/local					    \
-    QMAKE=/opt/local/libexec/qt4-mac/bin/qmake 
+    QMAKE=/opt/local/libexec/qt4-mac/bin/qmake
 build.cmd	    "python2.6"
 build.args	    "--prefix"
 build.target	    "install"
