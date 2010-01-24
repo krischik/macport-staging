@@ -1,0 +1,29 @@
+--- makefiles/arch/macosx.mk.orig	2010-01-24 18:22:33.000000000 +0100
++++ makefiles/arch/macosx.mk	2010-01-24 18:20:15.000000000 +0100
+@@ -1,13 +1,25 @@
+ include $(ROOTDIR)/makefiles/arch/unix.mk
+ 
+ ifeq "$(INSTALLDIR)" ""
+-  INSTALLDIR=/usr
++  INSTALLDIR=/opt/local
+ endif
+ IMAGEDIR = $(INSTALLDIR)/share/pixmaps
+ APPIMAGEDIR = $(INSTALLDIR)/share/pixmaps/%APPLICATION_NAME%
+ 
+ ZLSHARED = no
+ 
++ifeq "$(UI_TYPE)" "qt"
++  MOC = /opt/local/libexec/qt3-mac/bin/moc
++  QTINCLUDE = -I/opt/local/libexec/qt3-mac/include
++else
++  MOC = /opt/local/libexec/qt4-mac/bin/moc
++  QTINCLUDE = $(shell PKG_CONFIG_PATH=/opt/local/libexec/qt4-mac/lib/pkgconfig  pkg-config --cflags QtGui)
++endif
++
++ifeq "$(UI_TYPE)" "qt4"
++  UILIBS = $(shell PKG_CONFIG_PATH=/opt/local/libexec/qt4-mac/lib/pkgconfig  pkg-config --libs QtGui) -liconv.2.4.0
++endif
++
+ CC = gcc
+ AR = ar rsu
+ LD = g++
